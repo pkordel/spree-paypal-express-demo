@@ -1,4 +1,4 @@
-db/development.sqlite3.db 
+db/development.sqlite3.db
 db/schema.rb
 log/*.log
 tmp/*

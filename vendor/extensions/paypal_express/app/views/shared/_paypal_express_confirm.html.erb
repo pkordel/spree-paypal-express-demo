@@ -1,0 +1,9 @@
+<h1><%= t("confirm") %></h1>
+<p>
+  <%= t("order_not_yet_placed") %>
+</p>
+
+<%= render :partial => 'shared/order_details', :locals => {:order => @order} -%>
+<div class="form-buttons">
+  <%= button_to t('place_order'), paypal_finish_order_checkout_url(@checkout.order, {:token => params[:token] , :PayerID => params[:PayerID] } ), :class => "button primary" %>
+</div>

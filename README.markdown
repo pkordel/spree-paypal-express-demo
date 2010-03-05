@@ -1,11 +1,12 @@
 USAGE
 =====
 
-rake db:bootstrap
-set up Paypal Express in admin/payment_methods using your sandbox credentials
-I chose not to check review, to skip the confirm step in the store and opted for Pay Now
-if you check No Shipping, it still shows the address screen due to difficulties in modifying Checkout state machine
-you can create a shipping method with cost zero in the backend
+1. rake db:bootstrap
+2. set up Paypal Express in admin/payment_methods using your sandbox credentials:
+admin > Configuration > Payment Methods > New Payment Method and choose BillingIntegration::PaypalExpress
+3. I chose not to check review, to skip the confirm step in the store and opted for Pay Now
+4. if you check No Shipping, it still shows the address screen due to difficulties in modifying Checkout state machine
+5. you can create a shipping method with cost zero in the backend
 
 
 SUMMARY

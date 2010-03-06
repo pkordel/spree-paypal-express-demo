@@ -40,4 +40,8 @@ class SiteHooks < Spree::ThemeSupport::HookListener
   #   end
   #
 
+  insert_after :inside_cart_form do
+    %(<div style="float: right;"><a href="<%= paypal_payment_order_checkout_url @order, :payment_method_id => @payment_method %>" style="text-align: center;"><img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;"/></a></div>)
+  end
+
 end

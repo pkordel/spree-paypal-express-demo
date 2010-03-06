@@ -58,5 +58,13 @@ class SiteExtension < Spree::Extension
       end
     end
     
+    # Retrieve payment method id for instant paypal express checkout
+    OrdersController.class_eval do
+      edit.before :payment_method
+      def payment_method
+        @payment_method ||= PaymentMethod.available.select{|p| p.is_a? BillingIntegration::PaypalExpress}.first
+      end
+    end
+    
   end
 end

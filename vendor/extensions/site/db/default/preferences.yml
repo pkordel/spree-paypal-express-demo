@@ -1,0 +1,5 @@
+download:
+  attribute: amount
+  owner: download
+  owner_type: Calculator
+  value: 0

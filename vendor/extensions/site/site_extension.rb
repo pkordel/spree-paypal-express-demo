@@ -24,8 +24,18 @@ class SiteExtension < Spree::Extension
       preference :auto_capture, :boolean, :default => true
     end
     
+    Checkout.state_machines[:state] = StateMachine::Machine.new(Checkout, :initial => 'payment') do
+      after_transition :to => 'complete', :do => :complete_order
+      before_transition :to => 'complete', :do => :process_payment
+    
+      event :next do
+        transition :to => 'complete', :from => 'payment'
+      end
+    end
+    
     # to have a custom logo appear on paypal, set Spree::Config[:site_url] to a domain you can access
-    # and prepare a logo. see :header_image below. use https to avoid browser warnings about insecure page content
+    # and prepare a logo. see :header_image below
+    # use https to avoid browser warnings about insecure page content
     Spree::PaypalExpress.class_eval do
       def paypal_site_opts
         { :description             => "Goods from #{Spree::Config[:site_name]}", # site details...

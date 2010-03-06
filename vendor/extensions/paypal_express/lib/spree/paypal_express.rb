@@ -54,7 +54,9 @@ module Spree::PaypalExpress
       @order.checkout.special_instructions = @ppx_details.params["note"]
 
       #@order.update_attribute(:user, current_user)
-      unless payment_method.preferred_no_shipping
+      if payment_method.preferred_no_shipping
+        @order.checkout.shipping_method = ShippingMethod.find_or_create_by_name(:name => 'Download', :zone => Zone.first)
+      else
         ship_address = @ppx_details.address
         order_ship_address = Address.new :firstname  => @ppx_details.params["first_name"],
                                          :lastname   => @ppx_details.params["last_name"],
@@ -122,8 +124,7 @@ module Spree::PaypalExpress
                        :token => ppx_auth_response.params["token"],
                        :avs_response => ppx_auth_response.avs_result["code"],
                        :cvv_response => ppx_auth_response.cvv_result["code"])
-
-
+      
       @order.save!
       @checkout.reload
       #need to force checkout to complete state

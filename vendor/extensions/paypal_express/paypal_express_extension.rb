@@ -20,14 +20,5 @@ class PaypalExpressExtension < Spree::Extension
       include Spree::PaypalExpress
     end
     
-    # hack to get around errors when source doesn't support payment_profiles
-    Payment.class_eval do
-      def payment_profiles_supported?
-        true
-      end
-      def create_payment_profile
-      end
-    end
-    
   end
 end

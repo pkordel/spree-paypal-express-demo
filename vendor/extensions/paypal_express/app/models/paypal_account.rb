@@ -67,6 +67,11 @@ class PaypalAccount < ActiveRecord::Base
     !find_capture(payment).nil?
   end
 
+  # fix for Payment#payment_profiles_supported?
+  def payment_gateway
+    false
+  end
+
   private
   def find_authorization(payment)
     #find the transaction associated with the original authorization/capture

@@ -24,11 +24,13 @@ class SiteExtension < Spree::Extension
       preference :auto_capture, :boolean, :default => true
     end
     
-    Checkout.state_machines[:state] = StateMachine::Machine.new(Checkout, :initial => 'payment') do
+    # go from address to payment
+    Checkout.state_machines[:state] = StateMachine::Machine.new(Checkout, :initial => 'address') do
       after_transition :to => 'complete', :do => :complete_order
       before_transition :to => 'complete', :do => :process_payment
     
       event :next do
+        transition :to => 'payment', :from => 'address'
         transition :to => 'complete', :from => 'payment'
       end
     end
@@ -47,15 +49,6 @@ class SiteExtension < Spree::Extension
           :header_border_color     => "ffffff",
         }
       end      
-    end
-    
-    # hack to get around errors when source doesn't support payment_profiles
-    Payment.class_eval do
-      def payment_profiles_supported?
-        true
-      end
-      def create_payment_profile
-      end
     end
     
     # Retrieve payment method id for instant paypal express checkout

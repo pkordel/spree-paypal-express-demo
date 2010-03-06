@@ -85,6 +85,7 @@ module Spree::PaypalExpress
 
         @order.checkout.ship_address = order_ship_address
       end
+      
       @order.checkout.save
 
       if payment_method.preferred_review

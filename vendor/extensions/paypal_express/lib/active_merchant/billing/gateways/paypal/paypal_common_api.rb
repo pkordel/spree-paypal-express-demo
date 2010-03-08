@@ -257,7 +257,7 @@ module ActiveMerchant #:nodoc:
         end
       end
 
-      def add_payment_detail_item(xml, item)
+      def add_payment_detail_item(xml, item, options)
         currency_code = options[:currency] || currency(item[:amount])
         xml.tag! 'n2:PaymentDetailsItem' do
           xml.tag! 'n2:Name',        item[:name]        unless item[:name].blank?
@@ -301,7 +301,7 @@ module ActiveMerchant #:nodoc:
           xml.tag! 'n2:ButtonSource', application_id.to_s.slice(0,32) unless application_id.blank?
           xml.tag! 'n2:NotifyURL', options[:notify_url] unless options[:notify_url].blank?
           add_address(xml, 'n2:ShipToAddress', options[:shipping_address] || options[:address])
-          options[:items].each {|i| add_payment_detail_item xml, i } if options[:items]
+          options[:items].each {|i| add_payment_detail_item xml, i, options } if options[:items]
         end
       end
 

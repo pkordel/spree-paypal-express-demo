@@ -47,6 +47,7 @@ class SiteExtension < Spree::Extension
           :background_color        => "ffffff",  # must be hex only, six chars
           :header_background_color => "ffffff",
           :header_border_color     => "ffffff",
+          :currency                => 'SEK'
         }
       end      
     end
